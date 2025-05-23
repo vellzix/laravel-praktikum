@@ -44,7 +44,9 @@ jobs:
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "node_modules/*" ".git/*"
+        run: |
+          mkdir -p public/build
+          zip -r release.zip . -x "node_modules/*" ".git/*" "tests/*" ".github/*"
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
